@@ -22,7 +22,16 @@ export function Note() {
     }
   }, [auth])
 
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      dispatch(upsertNote({ apiToken, userId, note: currentNote }))
+    }, 1000)
+
+    return () => clearTimeout(delayDebounceFn)
+  }, [currentNote])
+
   if (auth.status !== LoginStatus.LOGGED_IN) return null;
+  // I changed const to var for variable hoisting - it was causing problems with useEffect
   var {
     apiToken,
     user: { id: userId },
@@ -30,7 +39,6 @@ export function Note() {
 
   const handleOnchange = (value: string) => {
     setCurrentNote(value)
-    dispatch(upsertNote({ apiToken, userId, note: value }))
   }
 
   return (
@@ -44,7 +52,13 @@ export function Note() {
 }
 
 function NoteField({ value, onChange }: NoteFieldProps) {
-  return <textarea defaultValue="Note goes here..." value={value} onChange={e => onChange(e.target.value)}></textarea>;
+  return (
+    <textarea
+      defaultValue="Note goes here..."
+      value={value}
+      onChange={e => onChange(e.target.value)}
+    >
+    </textarea>);
 }
 
 export type NoteFieldProps = {
