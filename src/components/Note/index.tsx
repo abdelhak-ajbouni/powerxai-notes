@@ -8,7 +8,7 @@ export function Note() {
   const auth = useAppSelector(selectAuth);
   const note = useAppSelector(selectNote);
   const dispatch = useAppDispatch();
-  const [currentNote, setCurrentNote] = useState<string>(note.note || "Note goes here...");
+  const [currentNote, setCurrentNote] = useState<string | null>(note.note);
 
   useEffect(() => {
     if (note.status === NoteStatus.NOTE_IDLE && note.note) {
@@ -24,7 +24,9 @@ export function Note() {
 
   useEffect(() => {
     const debounce = setTimeout(() => {
-      dispatch(upsertNote({ apiToken, userId, note: currentNote }))
+      if (currentNote) {
+        dispatch(upsertNote({ apiToken, userId, note: currentNote }))
+      }
     }, 1000)
 
     return () => clearTimeout(debounce)
@@ -54,14 +56,13 @@ export function Note() {
 function NoteField({ value, onChange }: NoteFieldProps) {
   return (
     <textarea
-      defaultValue="Note goes here..."
-      value={value}
+      value={value || "Note goes here..."}
       onChange={e => onChange(e.target.value)}
     >
     </textarea>);
 }
 
 export type NoteFieldProps = {
-  value: string
+  value: string | null
   onChange: (arg: string) => void
 }
