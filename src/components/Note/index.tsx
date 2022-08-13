@@ -48,7 +48,7 @@ export function Note() {
       <NoteField value={currentNote} onChange={handleOnchange} />
       {note.status === NoteStatus.NOTE_PENDING && (<p>syncing...</p>)}
       {note.status === NoteStatus.NOTE_IDLE && (<p className={styles.text_green}>synced</p>)}
-      {note.status === NoteStatus.NOTE_ERROR && (<p className={styles.text_red}>something went wrong</p>)}
+      {note.status === NoteStatus.NOTE_ERROR && (<p className={styles.text_red}>{note.error}</p>)}
     </div>
   );
 }
