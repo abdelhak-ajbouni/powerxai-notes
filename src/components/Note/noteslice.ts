@@ -34,6 +34,11 @@ export const getNote = createAsyncThunk(
         }
       }
     );
+
+    if (!response.ok) {
+      throw new Error(response.status + " failed");
+    }
+
     const json = await response.json();
     return json.note;
   }
@@ -54,7 +59,12 @@ export const upsertNote = createAsyncThunk(
           note
         })
       }
-    );
+    )
+
+    if (!response.ok) {
+      throw new Error(response.status + " failed");
+    }
+
     const json = await response.json();
     return json.note;
   }
