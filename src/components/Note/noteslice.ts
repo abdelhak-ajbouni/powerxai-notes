@@ -29,7 +29,8 @@ export const getNote = createAsyncThunk(
       `https://60b793ec17d1dc0017b8a6bc.mockapi.io/users/${userId}`,
       {
         headers: {
-          'Authorization': 'Bearer ' + apiToken
+          'Authorization': 'Bearer ' + apiToken,
+          'content-type': 'application/json'
         }
       }
     );
@@ -47,6 +48,7 @@ export const upsertNote = createAsyncThunk(
         method: 'put',
         headers: {
           'Authorization': 'Bearer ' + apiToken,
+          'content-type': 'application/json'
         },
         body: JSON.stringify({
           note
