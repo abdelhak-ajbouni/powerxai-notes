@@ -23,11 +23,11 @@ export function Note() {
   }, [auth])
 
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
+    const debounce = setTimeout(() => {
       dispatch(upsertNote({ apiToken, userId, note: currentNote }))
     }, 1000)
 
-    return () => clearTimeout(delayDebounceFn)
+    return () => clearTimeout(debounce)
   }, [currentNote])
 
   if (auth.status !== LoginStatus.LOGGED_IN) return null;
