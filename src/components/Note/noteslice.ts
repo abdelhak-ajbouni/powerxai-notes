@@ -35,7 +35,7 @@ export const getNote = createAsyncThunk(
       }
     );
     const json = await response.json();
-    return json;
+    return json.note;
   }
 );
 
@@ -56,7 +56,7 @@ export const upsertNote = createAsyncThunk(
       }
     );
     const json = await response.json();
-    return json;
+    return json.note;
   }
 );
 
